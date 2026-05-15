@@ -1,0 +1,95 @@
+/* Ensure the page layout from global.css remains, only style the map container here */
+#map {
+  width: 100%;
+  height: 600px; /* explicit height so the map is visible */
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+#map svg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* allow clicks to pass through to the map */
+}
+
+/* Circle styling with color mixing based on departure/arrival ratio */
+#map svg circle {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+  fill: var(--color);
+}
+
+/* Header and time filter styles */
+.page-header {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.time-filter {
+  margin-left: auto; /* push the label to the right */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.time-filter input[type="range"] {
+  width: 240px;
+}
+
+#time-display,
+#any-time {
+  display: block; /* keep on their own line so updates don't shift the slider */
+}
+
+#any-time {
+  color: #666;
+  font-style: italic;
+}
+
+/* Legend styling */
+.legend {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.legend div::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  background: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
